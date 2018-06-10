@@ -1,0 +1,111 @@
+package ch4;
+
+import java.util.*;
+import ch2.Body;
+
+class Attr {
+
+    private final String name;
+    private Object value = null;
+
+    public Attr(String name) {
+        this.name = name;
+    }
+
+    public Attr(String name, Object value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public Object setValue(Object newValue) {
+        Object oldVal = value;
+        value = newValue;
+        return oldVal;
+    }
+
+    @Override
+    public String toString() {
+        return name + "='" + value + "'";
+    }
+}
+
+interface Attributed {
+
+    void add(Attr newAttr);
+
+    Attr find(String attrName);
+
+    Attr remove(String attrName);
+
+    java.util.Iterator<Attr> attrs();
+}
+
+class AttributedImpl implements Attributed, Iterable<Attr> {
+
+    protected Map<String, Attr> attrTable =
+            new HashMap<String, Attr>();
+
+    public void add(Attr newAttr) {
+        attrTable.put(newAttr.getName(), newAttr);
+    }
+
+    public Attr find(String name) {
+        return attrTable.get(name);
+    }
+
+    public Attr remove(String name) {
+        return attrTable.remove(name);
+    }
+
+    public Iterator<Attr> attrs() {
+        return attrTable.values().iterator();
+    }
+
+    public Iterator<Attr> iterator() {
+        return attrs();
+    }
+}
+
+class AttributedBody extends Body
+        implements Attributed {
+
+    // composition and forwarding of an AttributedImpl to avoid
+    //double inheritance impossibility
+    private AttributedImpl attrImpl = new AttributedImpl();
+
+    public AttributedBody() {
+        super();
+    }
+
+    public AttributedBody(String name, Body orbits) {
+        super(name, orbits);
+    }
+    
+    // forward all Attributed methods to the attrImpl object
+    public void add(Attr newAttr) {
+        attrImpl.add(newAttr);
+    }
+
+    public Attr find(String name) {
+        return attrImpl.find(name);
+    }
+
+    public Attr remove(String name) {
+        return attrImpl.remove(name);
+    }
+
+    public Iterator<Attr> attrs() {
+        return attrImpl.attrs();
+    }
+}
+
+public class AttributedImplementation {
+}

@@ -1,0 +1,43 @@
+package ch1;
+/**
+ *
+ * @author alin
+ */
+public class Fibonacci {
+    // final: immutable variable (can never had its value changed)
+    // String is an immutable object
+    // static: the variable isn't associated with each instance, but with 
+    // the class
+
+    static final int MAX = 1;
+
+    /**
+     * Print the Fibonacci sequence for values < MAX
+     */
+    public static void runFibonacci() {
+        int lo = 1;
+        int hi = 1;
+        System.out.println("Using DO-WHILE:");
+        System.out.println(lo);
+        // do-while: always executes at least once
+        do {
+            System.out.println(hi);
+            hi = lo + hi;
+            lo = hi - lo;
+        } while (hi < MAX);
+
+        lo = 1;
+        hi = 1;
+        System.out.println("Using WHILE:");
+        System.out.println(lo);
+        while (hi < MAX) {
+            System.out.println(hi);
+            hi = lo + hi;
+            lo = hi - lo;
+        }
+    }
+    public static void main(String args[]) {
+        Fibonacci.runFibonacci();
+    }
+}
+

@@ -1,0 +1,33 @@
+package ch1;
+
+public class InitializationBlock {
+
+    public static int somevalue = 10;
+
+    static {
+        System.out.println("static initializer 1");
+    }
+
+    {
+        System.out.println("instance initializer 1");
+    }
+
+    public InitializationBlock() {
+        System.out.println("constructor");
+    }
+
+    {
+        System.out.println("instance initializer 2");
+    }
+
+    static {
+        System.out.println("static initializer 2");
+    }
+
+    public static void main(String args[]) {
+        System.out.println(InitializationBlock.somevalue);
+        InitializationBlock sib1 = new InitializationBlock();
+        InitializationBlock sib2 = new InitializationBlock();
+        InitializationBlock sib3 = new InitializationBlock();
+    }
+}

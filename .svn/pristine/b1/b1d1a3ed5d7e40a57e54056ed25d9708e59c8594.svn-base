@@ -1,0 +1,20 @@
+package ch2;
+
+public enum Test_Singleton_better {
+	// lazy initialization is not possible
+	INSTANCE;
+	private int counter = 0;
+	public int getCounter(){
+		return counter;
+	}
+	public void incrementCounter(){
+		++counter;
+	}
+
+	public static void main(String args[]){
+		System.out.println(Test_Singleton_better.INSTANCE.getCounter());
+		Test_Singleton_better.INSTANCE.incrementCounter();
+		System.out.println(Test_Singleton_better.INSTANCE.getCounter());
+		
+	} 
+}

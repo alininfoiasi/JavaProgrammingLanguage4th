@@ -1,0 +1,119 @@
+package ch2;
+
+
+class Primes {
+
+	static int[] knownPrimes = new int[10];
+	static int value = 10;
+
+	static {
+		knownPrimes[0] = 2;
+		for (int i = 1; i < knownPrimes.length; i++)
+			knownPrimes[i] = nextPrime(knownPrimes[i-1]);
+	}
+
+	static {
+		knownPrimes[0] = 3;
+		for (int i = 1; i < knownPrimes.length; i++)
+			knownPrimes[i] = nextPrime(knownPrimes[i-1]);
+	}
+
+
+	public void displayPrimes(){
+		for(int i=0;i<knownPrimes.length;i++){
+			System.out.println(knownPrimes[i]);
+		}
+	}
+
+	private static int nextPrime(int i){
+		// start with the next prime number
+		int next = i+1;
+		boolean found = false, isPrime;
+
+		while(found==false){
+			if(next%2==0){
+				next++;
+			}
+			isPrime = true;
+			for(int j=2; j<Math.sqrt(next)+1; j++){
+				if(next%j==0){
+					next++;
+					isPrime = false;
+					break;
+				}
+			}
+			if(isPrime==true){
+				found = true;
+			}
+		}
+		return next;
+	}
+
+}
+
+
+public class Body {
+	public long idNum;
+	public String name = "<unnamed>";
+	public Body orbits = null;
+	private static long nextID = 0;
+
+	{
+		try{
+			//idNum = 10/0;
+			;
+		} catch(ArithmeticException e){
+			throw new ArithmeticException("Division by 0!");
+		} finally{
+			idNum = nextID++;
+		}
+	}
+
+	public Body(String bodyName) {
+		name = bodyName;
+		orbits = null;
+	}
+
+	public Body(String bodyName, Body orbitsAround) {
+		this(bodyName);
+		orbits = orbitsAround;
+	}
+
+	public String toString() {
+		String desc = idNum + " (" + name + ")";
+		if (orbits != null)
+			desc += " orbits " + orbits.toString();
+		return desc;
+	}
+
+	public String testVariableParameterList(String...strings) {
+		String msg = "";
+		for(int i=0;i<strings.length;i++){
+			msg += strings[i];
+		}
+		return msg;
+	}
+
+
+	public static void commonName(final Body bodyRef) {
+		bodyRef.name = "Dog Star";
+		//bodyRef = null;
+	}
+	
+	public static void main(String args[]){
+
+		//Primes p = new Primes();
+		//p.displayPrimes();
+		/*
+		Body sun = new Body("Sun", null);
+		Body earth = new Body("Earth", sun);
+		System.out.println(sun.toString());
+		System.out.println(earth.toString());
+		*/
+		Body sirius = new Body("Sirius", null);
+		System.out.println("before: " + sirius);
+		commonName(sirius);
+		System.out.println("after: " + sirius);
+	}
+
+}
